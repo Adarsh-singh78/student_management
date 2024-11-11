@@ -1,0 +1,108 @@
+{% if data %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phno_no</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+
+        {% for i in data %}
+            <tr>
+                <th scope="row">{{i.id}}</th>
+                <td>{{i.name}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.mobile_no}}</td>
+                <td>
+                  <form action="" method="">
+
+                    <button class="btn btn-success"  type="button" data-bs-toggle="modal" data-bs-target="#update" onclick="passing('{{i.id}}', '{{i.name}}' ,'{{i.email}}', '{{i.mobile_no}}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <!-- undefined behaviour due to wrong way of passing data -->
+
+                    <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#del" onclick="getid('{{i.id}}')"><i class="fa-solid fa-trash"></i></button>
+                  </form>
+                </td>
+            </tr>
+        {% endfor %}
+      {% else %}
+            <h3>no result found</h3py>
+      {% endif %}
+    </tbody>
+  </table>
+
+
+
+  <div>
+    <form action="{% url 'del' %}" method="post">
+      {% csrf_token %}
+      <div class="modal fade" id="del" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Record</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+                <h5 class="bg-warning text-white border rounded text-center">Are you Sure You Want To Delete </h5>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-danger">Yes Delete </button>
+              <input type="hidden" id="hid" value="------" name="hid">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+
+  
+<!-- modals for update -->
+  <form action="{% url 'update' %}" method="POST">
+    {% csrf_token %}
+    <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Data</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+ 
+          <div class="modal-body">
+ 
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" value="" required id="updated-name">
+
+            <label for="email" class='form-label'>Email</label>
+            <input type="text" class="form-control" name="email" required  value="" id="updated-email">
+
+            <label for="mobile" class="form-label">Contact Number</label>
+            <input type="numbers" class="form-control" value="" name="contact" required id="updated-number">
+            <input type="hidden" value="" name="hidup" id="hide">
+
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary"> Update </button>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+   </form>
+  
